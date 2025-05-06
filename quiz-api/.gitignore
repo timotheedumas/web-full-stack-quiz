@@ -1,0 +1,15 @@
+# Environnement virtuel
+venv/
+
+# Fichiers compilés Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Config VS Code locale
+.vscode/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
