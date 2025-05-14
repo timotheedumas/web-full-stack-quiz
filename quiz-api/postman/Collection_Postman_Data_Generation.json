@@ -1,0 +1,331 @@
+{
+	"info": {
+		"_postman_id": "9b744192-3bbc-4b75-a8fa-51c515add52f",
+		"name": "Data generation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44723740",
+		"_collection_link": "https://timothee-7612714.postman.co/workspace/timothee's-Workspace~0c242c9e-2a27-4d2c-860e-9f9609576129/collection/44723740-9b744192-3bbc-4b75-a8fa-51c515add52f?action=share&source=collection_link&creator=44723740"
+	},
+	"item": [
+		{
+			"name": "Add question - 1 - Python Inventeur",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"position\": 1,\r\n  \"title\": \"Python Inventeur\",\r\n  \"text\": \"Qui est l'inventeur du langage Python ?\",\r\n  \"image\": \"\",\r\n  \"possibleAnswers\": [\r\n    { \"text\": \"Guido van Rossum\", \"isCorrect\": true },\r\n    { \"text\": \"Alan Turing\", \"isCorrect\": false },\r\n    { \"text\": \"Linus Torvalds\", \"isCorrect\": false },\r\n    { \"text\": \"Donald Knuth\", \"isCorrect\": false }\r\n  ]\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/questions",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"questions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add question - 2 - Python Date",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"position\": 2,\r\n  \"title\": \"2Python Inventeur\",\r\n  \"text\": \"2Qui est l'inventeur du langage Python ?\",\r\n  \"image\": \"\",\r\n  \"possibleAnswers\": [\r\n    { \"text\": \"2Guido van Rossum\", \"isCorrect\": true },\r\n    { \"text\": \"2Alan Turing\", \"isCorrect\": false },\r\n    { \"text\": \"2Linus Torvalds\", \"isCorrect\": false },\r\n    { \"text\": \"2Donald Knuth\", \"isCorrect\": false }\r\n  ]\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/questions",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"questions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add question - 3 - Python Origine",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"position\": 3,\r\n  \"title\": \"3Python Inventeur\",\r\n  \"text\": \"3Qui est l'inventeur du langage Python ?\",\r\n  \"image\": \"\",\r\n  \"possibleAnswers\": [\r\n    { \"text\": \"3Guido van Rossum\", \"isCorrect\": true },\r\n    { \"text\": \"3Alan Turing\", \"isCorrect\": false },\r\n    { \"text\": \"3Linus Torvalds\", \"isCorrect\": false },\r\n    { \"text\": \"3Donald Knuth\", \"isCorrect\": false }\r\n  ]\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/questions",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"questions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add question - 4 - Python License",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"position\": 4,\r\n  \"title\": \"Python Inventeur\",\r\n  \"text\": \"Qui est l'inventeur du langage Python ?\",\r\n  \"image\": \"\",\r\n  \"possibleAnswers\": [\r\n    { \"text\": \"Guido van Rossum\", \"isCorrect\": true },\r\n    { \"text\": \"Alan Turing\", \"isCorrect\": false },\r\n    { \"text\": \"Linus Torvalds\", \"isCorrect\": false },\r\n    { \"text\": \"Donald Knuth\", \"isCorrect\": false }\r\n  ]\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/questions",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"questions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add question - 5 - Python Type",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"position\": 5,\r\n  \"title\": \"Python Inventeur\",\r\n  \"text\": \"Qui est l'inventeur du langage Python ?\",\r\n  \"image\": \"\",\r\n  \"possibleAnswers\": [\r\n    { \"text\": \"Guido van Rossum\", \"isCorrect\": true },\r\n    { \"text\": \"Alan Turing\", \"isCorrect\": false },\r\n    { \"text\": \"Linus Torvalds\", \"isCorrect\": false },\r\n    { \"text\": \"Donald Knuth\", \"isCorrect\": false }\r\n  ]\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/questions",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"questions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add question - 6 - Vue invention",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"position\": 6,\r\n  \"title\": \"Python Inventeur\",\r\n  \"text\": \"Qui est l'inventeur du langage Python ?\",\r\n  \"image\": \"\",\r\n  \"possibleAnswers\": [\r\n    { \"text\": \"Guido van Rossum\", \"isCorrect\": true },\r\n    { \"text\": \"Alan Turing\", \"isCorrect\": false },\r\n    { \"text\": \"Linus Torvalds\", \"isCorrect\": false },\r\n    { \"text\": \"Donald Knuth\", \"isCorrect\": false }\r\n  ]\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/questions",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"questions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add question - 7 - Vue Date",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"position\": 7,\r\n  \"title\": \"Python Inventeur\",\r\n  \"text\": \"Qui est l'inventeur du langage Python ?\",\r\n  \"image\": \"\",\r\n  \"possibleAnswers\": [\r\n    { \"text\": \"Guido van Rossum\", \"isCorrect\": true },\r\n    { \"text\": \"Alan Turing\", \"isCorrect\": false },\r\n    { \"text\": \"Linus Torvalds\", \"isCorrect\": false },\r\n    { \"text\": \"Donald Knuth\", \"isCorrect\": false }\r\n  ]\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/questions",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"questions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add question - 8 - Reference",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"position\": 8,\r\n  \"title\": \"Python Inventeur\",\r\n  \"text\": \"Qui est l'inventeur du langage Python ?\",\r\n  \"image\": \"\",\r\n  \"possibleAnswers\": [\r\n    { \"text\": \"Guido van Rossum\", \"isCorrect\": true },\r\n    { \"text\": \"Alan Turing\", \"isCorrect\": false },\r\n    { \"text\": \"Linus Torvalds\", \"isCorrect\": false },\r\n    { \"text\": \"Donald Knuth\", \"isCorrect\": false }\r\n  ]\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/questions",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"questions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add question - 9 - Vue nature",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"position\": 9,\r\n  \"title\": \"Python Inventeur\",\r\n  \"text\": \"Qui est l'inventeur du langage Python ?\",\r\n  \"image\": \"\",\r\n  \"possibleAnswers\": [\r\n    { \"text\": \"Guido van Rossum\", \"isCorrect\": true },\r\n    { \"text\": \"Alan Turing\", \"isCorrect\": false },\r\n    { \"text\": \"Linus Torvalds\", \"isCorrect\": false },\r\n    { \"text\": \"Donald Knuth\", \"isCorrect\": false }\r\n  ]\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/questions",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"questions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add question - 10 - Typescript",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"position\": 10,\r\n  \"title\": \"Python Inventeur\",\r\n  \"text\": \"Qui est l'inventeur du langage Python ?\",\r\n  \"image\": \"\",\r\n  \"possibleAnswers\": [\r\n    { \"text\": \"Guido van Rossum\", \"isCorrect\": true },\r\n    { \"text\": \"Alan Turing\", \"isCorrect\": false },\r\n    { \"text\": \"Linus Torvalds\", \"isCorrect\": false },\r\n    { \"text\": \"Donald Knuth\", \"isCorrect\": false }\r\n  ]\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/questions",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"questions"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
