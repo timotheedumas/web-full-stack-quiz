@@ -1,0 +1,17 @@
+# === Backend (quiz-api) ===
+quiz-api/venv/
+quiz-api/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+quiz-api/quiz.db
+
+# === Frontend (quiz-ui) ===
+quiz-ui/node_modules/
+quiz-ui/dist/
+
+# === VS Code & système ===
+.vscode/
+.DS_Store
+Thumbs.db
+*.code-workspace
