@@ -9,6 +9,11 @@ quiz-api/quiz.db
 # === Frontend (quiz-ui) ===
 quiz-ui/node_modules/
 quiz-ui/dist/
+quiz-ui/.vite/
+
+# === Fichiers .env (variables d’environnement)
+.env
+.env.*
 
 # === VS Code & système ===
 .vscode/
