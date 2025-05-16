@@ -7,19 +7,31 @@ const instance = axios.create({
 
 export default {
   async call(method, resource, data = null, token = null) {
-    var headers = {
+    const headers = {
       'Content-Type': 'application/json',
     };
-    if (token != null) {
-      headers.authorization = 'Bearer ' + token;
+
+    // 🔐 Récupère automatiquement le token depuis localStorage
+    if (!token) {
+      token = localStorage.getItem('adminToken');
     }
 
-    return instance({
+    if (token) {
+      headers.Authorization = 'Bearer ' + token;
+    }
+
+    const config = {
       method,
-      headers: headers,
       url: resource,
-      data,
-    })
+      headers,
+    };
+
+    // ⚠️ Axios ne supporte pas data avec DELETE s’il est null
+    if (method !== 'delete') {
+      config.data = data;
+    }
+
+    return instance(config)
       .then((response) => {
         return { status: response.status, data: response.data };
       })
@@ -34,5 +46,45 @@ export default {
 
   getQuestion(position) {
     return this.call('get', `questions?position=${position}`);
+  },
+
+  // 🆕 Envoie les réponses du joueur à l’API
+  submitParticipation(playerName, answers) {
+    return this.call('post', 'participations', {
+      playerName,
+      answers,
+    });
+  },
+
+  getAllQuestions() {
+    return this.call('get', 'questions');
+  },
+
+  getQuestionById(id) {
+    return this.call('get', `questions/${id}`);
+  },
+
+  deleteQuestion(id) {
+    return this.call('delete', `questions/${id}`);
+  },
+  updateQuestion(id, updatedData) {
+    return this.call('put', `questions/${id}`, updatedData);
+  },
+  async createEmptyQuestion() {
+    const quizInfo = await this.getQuizInfo();
+    const nextPosition = (quizInfo.data?.size || 0) + 1;
+
+    return this.call('post', 'questions', {
+      title: 'Nouvelle question',
+      text: '',
+      image: '',
+      position: nextPosition,
+      possibleAnswers: [
+        { text: '', isCorrect: false },
+        { text: '', isCorrect: false },
+        { text: '', isCorrect: false },
+        { text: '', isCorrect: false },
+      ],
+    });
   },
 };

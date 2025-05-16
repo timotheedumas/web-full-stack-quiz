@@ -11,7 +11,7 @@ console.log('NewQuizPage mounted');
 function launchNewQuiz() {
   participationStorageService.savePlayerName(username.value);
   console.log('Nom sauvegardé :', username.value);
-  router.push('/questions');
+  router.push('/question/1'); // ✅ redirection vers la première question
 }
 </script>
 

@@ -16,7 +16,6 @@ from question_manager import insert_question
 from db_interface import (
     get_question_by_id,
     get_question_by_position,
-    update_question_by_id,
     delete_question_by_id,
     get_question_count,
     delete_all_questions,
@@ -24,11 +23,14 @@ from db_interface import (
     rebuild_database,
     save_participation,
     get_answers_for_question_id,
-    get_all_participations
+    get_all_participations,
+    get_all_questions,
+    update_question_and_answers
     
 )
 
 app = Flask(__name__)
+app.config["PROPAGATE_EXCEPTIONS"] = True
 CORS(app)
 
 expected_hash = b'\xd2x\x07{\xbf\xe7(Z\x14MK[\x11\xad\xb9\xcf'
@@ -94,6 +96,7 @@ def get_question_by_position_endpoint():
     else:
         return {"error": "Question not found"}, 404
 
+
 @app.route("/questions/<int:question_id>", methods=["PUT"])
 def update_question(question_id):
     token = request.headers.get("Authorization")
@@ -105,19 +108,14 @@ def update_question(question_id):
         return {"error": "Unauthorized"}, 401
 
     data = request.get_json()
-    success = update_question_by_id(
-        question_id,
-        new_position=data["position"],
-        title=data["title"],
-        text=data["text"],
-        image=data["image"]
-    )
-
-    if not success:
-        return {"error": "Not found"}, 404
-
-    return "", 204
-
+    try:
+        success = update_question_and_answers(question_id, data)
+        if not success:
+            return {"error": "Not found"}, 404
+        return "", 204
+    except Exception as e:
+        print("💥 ERREUR dans PUT /questions:", str(e))  # 👈 Ajout pour afficher l’erreur dans le terminal
+        return {"error": str(e)}, 500
 @app.route("/questions/<int:question_id>", methods=["DELETE"])
 def delete_question(question_id):
     token = request.headers.get("Authorization")
@@ -138,12 +136,14 @@ def delete_question(question_id):
 def get_quiz_info():
     count = get_question_count()
     participations = get_all_participations()
+    questions = get_all_questions()  # ✅ récupération des questions
 
     scores = [participation_to_dict(p) for p in participations]
 
     return {
         "size": count,
-        "scores": scores
+        "scores": scores,
+        "questions": [question_to_dict(q) for q in questions]
     }, 200
 
 @app.route("/questions/all", methods=["DELETE"])

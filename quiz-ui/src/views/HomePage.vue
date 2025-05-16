@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import quizApiService from '@/services/QuizApiService';
+import Leaderboard from '@/components/Leaderboard.vue'; // ✅ ajout de l'import
 
 const registeredScores = ref([]);
 
@@ -24,16 +25,8 @@ onMounted(async () => {
 
     <div v-else>
       <h2 class="h4">Meilleurs scores :</h2>
-      <ul class="list-group mt-3">
-        <li
-          v-for="scoreEntry in registeredScores"
-          :key="scoreEntry.date"
-          class="list-group-item d-flex justify-content-between"
-        >
-          <span>{{ scoreEntry.playerName }}</span>
-          <strong>{{ scoreEntry.score }} pts</strong>
-        </li>
-      </ul>
+      <Leaderboard :scores="registeredScores" />
+      <!-- ✅ remplacement -->
     </div>
 
     <router-link to="/new-quiz" class="btn btn-primary mt-4 w-100">

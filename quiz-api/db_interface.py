@@ -1,9 +1,9 @@
 import sqlite3
 from models import Question, dict_to_question
 from models import Participation
+import os
 
-
-DATABASE_PATH = "quiz.db"
+DATABASE_PATH = os.path.join(os.path.dirname(__file__), "quiz.db")
 
 
 def save_question(question: Question):
@@ -56,61 +56,6 @@ def get_question_by_position(position: int):
             return None
     finally:
         connection.close()
-
-
-def update_question_by_id(question_id, new_position, title, text, image):
-    connection = sqlite3.connect(DATABASE_PATH)
-    connection.row_factory = sqlite3.Row  # pour accéder à existing["id"]
-    cursor = connection.cursor()
-
-    try:
-        cursor.execute("BEGIN")
-
-        # Récupère la position actuelle
-        cursor.execute("SELECT position FROM Question WHERE id = ?", (question_id,))
-        row = cursor.fetchone()
-        if not row:
-            cursor.execute("ROLLBACK")
-            return False
-        current_position = row["position"]
-
-        cursor.execute("UPDATE Question SET position = -1 WHERE id = ?", (question_id,))
-
-        if new_position < current_position:
-            # On monte la question => on décale vers le bas les autres entre new et current-1
-            cursor.execute("""
-                UPDATE Question
-                SET position = position + 1
-                WHERE position >= ? AND position < ?
-            """, (new_position, current_position))
-        elif new_position > current_position:
-            # On descend la question => on décale vers le haut les autres entre current+1 et new
-            cursor.execute("""
-                UPDATE Question
-                SET position = position - 1
-                WHERE position <= ? AND position > ?
-            """, (new_position, current_position))
-
-        # Met à jour la question cible avec la nouvelle position et son contenu
-        cursor.execute("""
-            UPDATE Question
-            SET position = ?, title = ?, text = ?, image = ?
-            WHERE id = ?
-        """, (new_position, title, text, image, question_id))
-
-        if cursor.rowcount == 0:
-            cursor.execute("ROLLBACK")
-            return False
-
-        cursor.execute("COMMIT")
-        return True
-
-    except Exception as e:
-        cursor.execute("ROLLBACK")
-        raise e
-    finally:
-        connection.close()
-
 
 
 def delete_question_by_id(question_id):
@@ -291,5 +236,85 @@ def get_all_participations():
         cursor.execute("SELECT * FROM Participation ORDER BY score DESC")
         rows = cursor.fetchall()
         return [Participation(**row) for row in rows]
+    finally:
+        connection.close()
+
+def get_all_questions():
+    with sqlite3.connect(DATABASE_PATH) as connection:
+        cursor = connection.cursor()
+        cursor.execute("""
+            SELECT id, position, title, text, image
+            FROM question
+            ORDER BY position ASC
+        """)
+        rows = cursor.fetchall()
+        return [Question(*row) for row in rows]
+    
+def update_question_and_answers(question_id, data):
+    connection = sqlite3.connect(DATABASE_PATH)
+    connection.row_factory = sqlite3.Row  # ✅ Corrige le bug tuple
+    cursor = connection.cursor()
+
+    try:
+        cursor.execute("BEGIN")
+
+        # 1. Récupère la position actuelle
+        cursor.execute("SELECT position FROM Question WHERE id = ?", (question_id,))
+        row = cursor.fetchone()
+        if not row:
+            cursor.execute("ROLLBACK")
+            return False
+        current_position = row["position"]
+        new_position = data["position"]
+
+        # 2. Réorganise les positions si besoin
+        cursor.execute("UPDATE Question SET position = -1 WHERE id = ?", (question_id,))
+        if new_position < current_position:
+            cursor.execute("""
+                UPDATE Question
+                SET position = position + 1
+                WHERE position >= ? AND position < ?
+            """, (new_position, current_position))
+        elif new_position > current_position:
+            cursor.execute("""
+                UPDATE Question
+                SET position = position - 1
+                WHERE position <= ? AND position > ?
+            """, (new_position, current_position))
+
+        # 3. Mise à jour de la question
+        cursor.execute("""
+            UPDATE Question
+            SET position = ?, title = ?, text = ?, image = ?
+            WHERE id = ?
+        """, (
+            new_position,
+            data["title"],
+            data["text"],
+            data["image"],
+            question_id
+        ))
+
+        # 4. Supprime les anciennes réponses
+        cursor.execute("DELETE FROM Answer WHERE question_id = ?", (question_id,))
+        print("Réponses reçues :", data["possibleAnswers"])  # ✅ Debug
+
+        # 5. Insère les nouvelles réponses
+        for answer in data["possibleAnswers"]:
+            cursor.execute("""
+                INSERT INTO Answer (question_id, text, isCorrect)
+                VALUES (?, ?, ?)
+            """, (
+                question_id,
+                answer.get("text", ""),  # Sécurise
+                int(answer.get("isCorrect", False))
+            ))
+
+        cursor.execute("COMMIT")
+        return True
+
+    except Exception as e:
+        cursor.execute("ROLLBACK")
+        raise e
     finally:
         connection.close()
