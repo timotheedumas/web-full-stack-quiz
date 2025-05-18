@@ -216,16 +216,6 @@ def post_participation():
     if not player_name or not isinstance(answers, list):
         return {"error": "Invalid payload"}, 400
 
-    if len(answers) != 10:
-        return {"error": "Exactly 10 answers required"}, 400
-
-    # Si on reçoit une liste d'entiers : [id1, id2, ...]
-    if all(isinstance(a, int) for a in answers):
-        answers = [
-            {"questionId": i + 1, "answerId": aid}
-            for i, aid in enumerate(answers)
-        ]
-
     score = 0
     for entry in answers:
         if not isinstance(entry, dict):
@@ -239,10 +229,10 @@ def post_participation():
 
         possible_answers = get_answers_for_question_id(question_id)
 
-        if 1 <= answer_id <= len(possible_answers):
-            valid_answer = possible_answers[answer_id - 1]  # Interprétation indexée
-        else:
+        matching = [a for a in possible_answers if a["id"] == answer_id]
+        if not matching:
             return {"error": "Answer does not match question"}, 400
+        valid_answer = matching[0]
 
         if valid_answer["isCorrect"]:
             score += 1

@@ -1,0 +1,32 @@
+.button-red {
+  background-color: #d32f2f;
+  color: white;
+}
+.button-blue {
+  background-color: #1976d2;
+  color: white;
+}
+.button-yellow {
+  background-color: #fbc02d;
+  color: white;
+}
+.button-green {
+  background-color: #388e3c;
+  color: white;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.pulse-click {
+  animation: pulse 0.3s ease-in-out;
+}

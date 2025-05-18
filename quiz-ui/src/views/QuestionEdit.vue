@@ -20,10 +20,20 @@ const question = ref({
   ],
 });
 
+const totalQuestions = ref(0); // 🆕 nombre total de questions dans le quiz
+
 async function load() {
-  const response = await quizApiService.getQuestionById(id);
-  if (response && response.data) {
-    question.value = response.data;
+  const [questionRes, infoRes] = await Promise.all([
+    quizApiService.getQuestionById(id),
+    quizApiService.getQuizInfo(),
+  ]);
+
+  if (questionRes && questionRes.data) {
+    question.value = questionRes.data;
+  }
+
+  if (infoRes && infoRes.data && typeof infoRes.data.size === 'number') {
+    totalQuestions.value = infoRes.data.size;
   }
 }
 
@@ -69,7 +79,9 @@ onMounted(load);
 
     <div class="mb-3">
       <label>Position</label>
-      <input v-model="question.position" type="number" class="form-control" />
+      <select v-model="question.position" class="form-select">
+        <option v-for="n in totalQuestions" :key="n" :value="n">{{ n }}</option>
+      </select>
     </div>
 
     <div class="mb-3">

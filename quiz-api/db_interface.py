@@ -72,13 +72,16 @@ def delete_question_by_id(question_id):
             return False
         deleted_position = row[0]
 
-        # On supprime la question
+        # 🧹 Supprime d’abord les réponses liées
+        cursor.execute("DELETE FROM Answer WHERE question_id = ?", (question_id,))
+
+        # 🧹 Puis la question
         cursor.execute("DELETE FROM Question WHERE id = ?", (question_id,))
         if cursor.rowcount == 0:
             cursor.execute("ROLLBACK")
             return False
 
-        # On décale les suivantes vers le haut
+        # Réorganise les positions restantes
         cursor.execute("""
             UPDATE Question
             SET position = position - 1
@@ -92,6 +95,7 @@ def delete_question_by_id(question_id):
         raise e
     finally:
         connection.close()
+
 
 
 def delete_all_questions():

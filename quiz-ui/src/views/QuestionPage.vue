@@ -34,8 +34,10 @@ function answerClickedHandler(answerId) {
     return;
   }
 
-  selectedAnswers.value.push(index + 1); // ✅ 1-based index attendu par l'API
-  console.log('Réponse sélectionnée (index + 1) :', index + 1);
+  selectedAnswers.value.push({
+    questionId: currentQuestion.value.id,
+    answerId: answerId,
+  });
 
   if (currentPosition.value < totalQuestions.value) {
     const nextPosition = currentPosition.value + 1;
